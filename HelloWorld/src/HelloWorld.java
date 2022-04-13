@@ -1,3 +1,7 @@
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 import javax.security.auth.login.LoginException;
 
 import net.dv8tion.jda.api.JDA;
@@ -28,5 +32,23 @@ public class HelloWorld {
 		
 		
 	}
+	
+	private void sendGet() throws Exception {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
+                .uri(URI.create("https://scibowldb.com/api/questions/random%22"))
+                .setHeader("User-Agent", "Java 11 HttpClient Bot")
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        // print status code
+        System.out.println(response.statusCode());
+
+        // print response body
+        System.out.println(response.body());
+
+    }
 
 }
