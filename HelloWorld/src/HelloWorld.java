@@ -18,13 +18,12 @@ public class HelloWorld {
 			.version(HttpClient.Version.HTTP_2)
 			.build();
 
-
 	public static void main(String[] args) throws LoginException{
 		// TODO Auto-generated method stub
 		//JDA jda = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68").build();
 		JDABuilder builder = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
 
-		Java11HttpClientExample obj = new Java11HttpClientExample();
+		HelloWorld obj = new HelloWorld();
 		JSONObject QuestionFile=obj.sendGet();
 
 	    // Disable parts of the cache
@@ -35,10 +34,7 @@ public class HelloWorld {
 	    builder.setCompression(Compression.NONE);
 	    // Set activity (like "playing Something")
 	    builder.setActivity(Activity.watching("TV"));
-	    
 	    builder.build();
-		
-		
 	}
 
 	//Method that returns a JSONObject with all of the information for a single question
@@ -75,4 +71,7 @@ public class HelloWorld {
 		return (JSONObject) parser.parse(Edited);
 	}
 
+	private String createJSON(){
+
+	}
 }
