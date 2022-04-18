@@ -1,12 +1,17 @@
 import java.net.URI;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import javax.security.auth.login.LoginException;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
@@ -19,12 +24,12 @@ public class HelloWorld {
 			.build();
 
 
-	public static void main(String[] args) throws LoginException{
+	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
 		//JDA jda = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68").build();
 		JDABuilder builder = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
 
-		Java11HttpClientExample obj = new Java11HttpClientExample();
+		HelloWorld obj = new HelloWorld();
 		JSONObject QuestionFile=obj.sendGet();
 
 	    // Disable parts of the cache
@@ -39,6 +44,13 @@ public class HelloWorld {
 	    builder.build();
 		
 		
+	}
+	
+	public void onMessageReceived(MessageReceivedEvent event){
+	    if(event.getMessage().getContentRaw().startsWith("!!say")){
+	        event.getChannel().sendMessage(event.getMessage().getContentRaw().substring(6)).queue();
+	        event.getMessage().delete().queue();
+	    }
 	}
 
 	//Method that returns a JSONObject with all of the information for a single question
