@@ -21,22 +21,11 @@ public class MessageListener extends ListenerAdapter{
 
 //	}
 	
-	
-	
-	public void tester(MessageReceivedEvent event)
-    {
-		if (!event.getAuthor().isBot()) {
-		    //event.getChannel().sendMessage("hello!").queue();
-		    //event.getMessage().reply("hi look I can reply!").queue();
-		}
-		
-    }
-	
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		String[] args = event.getMessage().getContentRaw().split(" ");
-		System.out.println(args[0]);
+		//System.out.println(args[0]);
 		if (args[0].equalsIgnoreCase(prefix + "question")) 
 		{
 			String question;
@@ -48,6 +37,15 @@ public class MessageListener extends ListenerAdapter{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+		}
+		else if (args[0].equalsIgnoreCase(prefix + "hi")) {
+			event.getMessage().reply("hi look I can reply!").queue();
+		}
+		else if (args[0].equalsIgnoreCase(prefix + "game")) {
+			
+		}
+		else if (args[0].equalsIgnoreCase(prefix + "end")) {
 			
 		}
 	}
