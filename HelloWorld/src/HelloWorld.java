@@ -53,7 +53,6 @@ public class HelloWorld {
 		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 		System.out.println(response.body());
 		String Edited= response.body().substring(12,response.body().length()-2);
-		System.out.println(Edited);
 		JSONParser parser = new JSONParser();
 		return (JSONObject) parser.parse(Edited);
     }
@@ -72,7 +71,6 @@ public class HelloWorld {
 		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 		System.out.println(response.body());
 		String Edited= response.body().substring(12,response.body().length()-2);
-		System.out.println(Edited);
 		JSONParser parser = new JSONParser();
 		return (JSONObject) parser.parse(Edited);
 	}
