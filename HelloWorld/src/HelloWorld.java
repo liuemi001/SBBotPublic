@@ -58,4 +58,23 @@ public class HelloWorld {
 		return (JSONObject) parser.parse(Edited);
     }
 
+	private JSONObject sendPost() throws Exception {
+		HttpRequest.BodyPublisher data=HttpRequest.BodyPublishers.ofString("""
+        {"sources": ["Official", "CSUB"], "categories": ["PHYSICS"]}
+        """);
+		HttpRequest request = HttpRequest.newBuilder()
+				.POST(data)
+				.uri(URI.create("https://scibowldb.com/api/questions/random"))
+				.setHeader("User-Agent", "Java 11 HttpClient Bot") // add request header
+				.header("Content-Type", "application/json; utf-8")
+				.build();
+
+		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+		System.out.println(response.body());
+		String Edited= response.body().substring(12,response.body().length()-2);
+		System.out.println(Edited);
+		JSONParser parser = new JSONParser();
+		return (JSONObject) parser.parse(Edited);
+	}
+
 }
