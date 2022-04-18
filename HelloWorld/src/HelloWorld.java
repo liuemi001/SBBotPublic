@@ -32,6 +32,7 @@ public class HelloWorld {
 
 		HelloWorld obj = new HelloWorld();
 		JSONObject QuestionFile=obj.sendGet();
+		System.out.println(QuestionFile.get("bonus_question"));
 
 	    // Disable parts of the cache
 	    builder.disableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
@@ -40,17 +41,9 @@ public class HelloWorld {
 	    // Disable compression (not recommended)
 	    builder.setCompression(Compression.NONE);
 	    // Set activity (like "playing Something")
-	    builder.setActivity(Activity.watching("TV"));
+	    builder.setActivity(Activity.playing("Science Bowl!"));
 	    builder.addEventListeners(new MessageListener());
 	    builder.build();
-	}
-	
-	public void onMessageReceived(MessageReceivedEvent event){
-		System.out.println(event.getChannel());
-		System.out.println(event.getMessage());
-	    event.getChannel().sendMessage("hello!").queue();
-	    //event.getMessage().delete().queue();
-	    
 	}
 
 	//Method that returns a JSONObject with all of the information for a single question

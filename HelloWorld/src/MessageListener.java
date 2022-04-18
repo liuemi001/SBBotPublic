@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class MessageListener extends ListenerAdapter{
+	public String prefix = "!";
+	DatabaseUnpacking bird = new DatabaseUnpacking();
 
 	//public static void main(String[] args) throws LoginException{
 		// TODO Auto-generated method stub
@@ -19,12 +21,35 @@ public class MessageListener extends ListenerAdapter{
 
 //	}
 	
-	@Override
-    public void onMessageReceived(MessageReceivedEvent event)
+	
+	
+	public void tester(MessageReceivedEvent event)
     {
-		System.out.println(event.getChannel());
-		System.out.println(event.getMessage());
-	    event.getChannel().sendMessage("hello!").queue();
+		if (!event.getAuthor().isBot()) {
+		    //event.getChannel().sendMessage("hello!").queue();
+		    //event.getMessage().reply("hi look I can reply!").queue();
+		}
+		
     }
+	
+	@Override
+	public void onMessageReceived(MessageReceivedEvent event)
+	{
+		String[] args = event.getMessage().getContentRaw().split(" ");
+		System.out.println(args[0]);
+		if (args[0].equalsIgnoreCase(prefix + "question")) 
+		{
+			String question;
+			try {
+				question = (String) bird.sendGet().get("tossup_question");
+				System.out.println(question);
+				event.getMessage().reply(question).queue();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
 
 }
