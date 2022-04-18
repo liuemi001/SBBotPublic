@@ -24,7 +24,11 @@ public class HelloWorld {
 			.build();
 
 
+
 	public static void main(String[] args) throws Exception{
+
+
+
 		// TODO Auto-generated method stub
 		//JDA jda = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68").build();
 		JDABuilder builder = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
@@ -40,10 +44,7 @@ public class HelloWorld {
 	    builder.setCompression(Compression.NONE);
 	    // Set activity (like "playing Something")
 	    builder.setActivity(Activity.watching("TV"));
-	    
 	    builder.build();
-		
-		
 	}
 	
 	public void onMessageReceived(MessageReceivedEvent event){
@@ -87,4 +88,7 @@ public class HelloWorld {
 		return (JSONObject) parser.parse(Edited);
 	}
 
+	private String createJSON(){
+
+	}
 }
