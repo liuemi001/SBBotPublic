@@ -23,9 +23,12 @@ public class HelloWorld {
 			.version(HttpClient.Version.HTTP_2)
 			.build();
 
+<<<<<<< HEAD
 
 	public static void main(String[] args) throws Exception{
-
+=======
+	public static void main(String[] args) throws LoginException{
+>>>>>>> c396340cad6f7ded389660e6dbe4a201bbd358c7
 		// TODO Auto-generated method stub
 		//JDA jda = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68").build();
 		JDABuilder builder = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
@@ -41,16 +44,14 @@ public class HelloWorld {
 	    builder.setCompression(Compression.NONE);
 	    // Set activity (like "playing Something")
 	    builder.setActivity(Activity.watching("TV"));
-	    builder.addEventListeners(new MessageListener());
 	    builder.build();
 	}
 	
 	public void onMessageReceived(MessageReceivedEvent event){
-		System.out.println(event.getChannel());
-		System.out.println(event.getMessage());
-	    event.getChannel().sendMessage("hello!").queue();
-	    //event.getMessage().delete().queue();
-	    
+	    if(event.getMessage().getContentRaw().startsWith("!!say")){
+	        event.getChannel().sendMessage(event.getMessage().getContentRaw().substring(6)).queue();
+	        event.getMessage().delete().queue();
+	    }
 	}
 
 	//Method that returns a JSONObject with all of the information for a single question
@@ -88,6 +89,6 @@ public class HelloWorld {
 	}
 
 	private String createJSON(){
-		return null;
+
 	}
 }
