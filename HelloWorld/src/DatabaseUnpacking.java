@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.JDA;
 public class DatabaseUnpacking {
 
 	public static JDA jda;
+	public int helloint = 0;
 
 	private final HttpClient httpClient = HttpClient.newBuilder()
 			.version(HttpClient.Version.HTTP_2)

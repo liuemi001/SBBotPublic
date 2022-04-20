@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+
 import javax.security.auth.login.LoginException;
 
 import net.dv8tion.jda.api.JDA;
@@ -40,7 +42,19 @@ public class MessageListener extends ListenerAdapter{
 			
 		}
 		else if (args[0].equalsIgnoreCase(prefix + "hi")) {
-			event.getMessage().reply("hi look I can reply!").queue();
+			Thread Thread2 = new Thread(() -> {
+				DatabaseUnpacking unpack = new DatabaseUnpacking();
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				unpack.helloint = 1;
+				event.getMessage().reply(Integer.toString(unpack.helloint)).queue();
+			});
+			Thread2.start();
+			
 		}
 		else if (args[0].equalsIgnoreCase(prefix + "game")) {
 			

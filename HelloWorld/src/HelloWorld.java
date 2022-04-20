@@ -29,7 +29,8 @@ public class HelloWorld {
 		// TODO Auto-generated method stub
 		//JDA jda = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68").build();
 		JDABuilder builder = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
-
+		JDABuilder builder2 = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
+		
 		HelloWorld obj = new HelloWorld();
 		JSONObject QuestionFile=obj.sendGet();
 		System.out.println(QuestionFile.get("bonus_question"));
@@ -43,6 +44,9 @@ public class HelloWorld {
 	    // Set activity (like "playing Something")
 	    builder.setActivity(Activity.playing("Science Bowl!"));
 	    builder.addEventListeners(new MessageListener());
+	    builder.build();
+	    builder.addEventListeners(new TesterListener());
+	    System.out.println("hello");
 	    builder.build();
 	}
 
