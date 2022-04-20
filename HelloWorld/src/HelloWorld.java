@@ -43,9 +43,11 @@ public class HelloWorld {
 	    builder.setCompression(Compression.NONE);
 	    // Set activity (like "playing Something")
 	    builder.setActivity(Activity.playing("Science Bowl!"));
-	    builder.addEventListeners(new MessageListener());
+	    TesterListener listener1 = new TesterListener();
+	    builder.addEventListeners(listener1);
 	    builder.build();
-	    builder.addEventListeners(new TesterListener());
+	    builder.removeEventListeners(listener1);
+	    builder.addEventListeners(new MessageListener());
 	    System.out.println("hello");
 	    builder.build();
 	}
