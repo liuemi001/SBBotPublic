@@ -42,18 +42,9 @@ public class MessageListener extends ListenerAdapter{
 			
 		}
 		else if (args[0].equalsIgnoreCase(prefix + "hi")) {
-			Thread Thread2 = new Thread(() -> {
-				DatabaseUnpacking unpack = new DatabaseUnpacking();
-				try {
-					TimeUnit.SECONDS.sleep(1);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				unpack.helloint = 1;
-				event.getMessage().reply(Integer.toString(unpack.helloint)).queue();
-			});
-			Thread2.start();
+			
+			event.getMessage().reply("listener 1 here").queue();
+		
 			
 		}
 		else if (args[0].equalsIgnoreCase(prefix + "game")) {

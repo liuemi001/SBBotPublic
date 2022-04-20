@@ -22,7 +22,7 @@ public class TesterListener extends ListenerAdapter{
 					// TODO Auto-generated catch block
 				//	e.printStackTrace();
 				//}
-				event.getMessage().reply("tester 2").queue();
+				event.getMessage().reply("listener 2 here").queue();
 			}
 		//});
 		//newThread.start();

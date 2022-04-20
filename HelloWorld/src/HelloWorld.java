@@ -48,7 +48,6 @@ public class HelloWorld {
 	    builder.build();
 	    builder.removeEventListeners(listener1);
 	    builder.addEventListeners(new MessageListener());
-	    System.out.println("hello");
 	    builder.build();
 	}
 
