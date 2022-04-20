@@ -11,21 +11,21 @@ public class TesterListener extends ListenerAdapter{
 	public void onMessageReceived(MessageReceivedEvent event)
 	{
 		String[] args = event.getMessage().getContentRaw().split(" ");
-		Thread newThread = new Thread(() -> {
+		//Thread newThread = new Thread(() -> {
 			if (args[0].equalsIgnoreCase(prefix + "hi")) {
 				
-				DatabaseUnpacking unpack = new DatabaseUnpacking();
-				unpack.helloint = 2;
-				try {
-					TimeUnit.SECONDS.sleep(3);
-				} catch (InterruptedException e) {
+				//DatabaseUnpacking unpack = new DatabaseUnpacking();
+				//unpack.helloint = 2;
+				//try {
+				//	TimeUnit.SECONDS.sleep(3);
+				//} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				event.getMessage().reply(Integer.toString(unpack.helloint)).queue();
+				//	e.printStackTrace();
+				//}
+				event.getMessage().reply("tester 2").queue();
 			}
-		});
-		newThread.start();
+		//});
+		//newThread.start();
 		
 	}
 	
