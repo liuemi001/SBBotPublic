@@ -28,6 +28,10 @@ public class MessageListener extends ListenerAdapter{
 	{
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		//System.out.println(args[0]);
+		if (event.getMessage().getContentRaw().startsWith("Hi Apples!")) {
+		    event.getChannel().sendMessage("Hi! Tell me your name, or say \"Stop\"!").queue();
+		    event.getJDA().addEventListener(new GameStateMachine(event.getChannel(), event.getAuthor()));
+		}
 		if (args[0].equalsIgnoreCase(prefix + "question")) 
 		{
 			String question;
