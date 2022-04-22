@@ -49,6 +49,10 @@ public class HelloWorld {
 	    builder.removeEventListeners(listener1);
 	    builder.addEventListeners(new MessageListener());
 	    builder.build();
+	    String request = String.format("""
+				{"sources": ["Official", "CSUB"], "categories": ["%s"]}
+				""", "PHYSICS");
+	    System.out.println(request);
 	}
 
 	//Method that returns a JSONObject with all of the information for a single question
