@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class OnePlayerGame {
 	public boolean continueGame = true;
 	public boolean playerResponded = false;
+	private boolean tuCorrect = false; 
 	
 	Random rand = new Random();
 	
@@ -41,35 +42,45 @@ public class OnePlayerGame {
 		rawcats.addAll(categories);
 		
 		//parse user inputs to the formal category names for JSON fetching
-		for (int i =0; i < rawcats.size(); i++) {
-			switch (rawcats.get(i).toLowerCase()) {
-			case "phys": 
-				this.categories.add("PHYSICS");
-				break;
-			case "nrg":
-				this.categories.add("ENERGY");
-				break;
-			case "es": 
-				this.categories.add("EARTH AND SPACE");
-				break;
-			case "earth":
-				this.categories.add("EARTH SCIENCE");
-				break;
-			case "astro":
-				this.categories.add("ASTRONOMY");
-				break;
-			case "chem":
-				this.categories.add("CHEMISTRY");
-				break;
-			case "bio":
-				this.categories.add("BIOLOGY");
-				break;
-			case "math":
-				this.categories.add("MATH");
-				break;
+		if (categories.size() ==0) {
+			String[] allCategories = new String[]{"PHYSICS", "ENERGY", "EARTH AND SPACE", "EARTH SCIENCE", 
+			        "ASTRONOMY", "CHEMISTRY", "BIOLOGY", "MATH"};
+			for (int i = 0; i<allCategories.length; i++) {
+				this.categories.add(allCategories[i]);
 			}
-				
 		}
+		else {
+			for (int i =0; i < rawcats.size(); i++) {
+				switch (rawcats.get(i).toLowerCase()) {
+				case "phys": 
+					this.categories.add("PHYSICS");
+					break;
+				case "nrg":
+					this.categories.add("ENERGY");
+					break;
+				case "es": 
+					this.categories.add("EARTH AND SPACE");
+					break;
+				case "earth":
+					this.categories.add("EARTH SCIENCE");
+					break;
+				case "astro":
+					this.categories.add("ASTRONOMY");
+					break;
+				case "chem":
+					this.categories.add("CHEMISTRY");
+					break;
+				case "bio":
+					this.categories.add("BIOLOGY");
+					break;
+				case "math":
+					this.categories.add("MATH");
+					break;
+				}
+					
+			}
+		}
+			
 		
 		
 		//initialize stats arraylist to 0 for each category
@@ -93,7 +104,9 @@ public class OnePlayerGame {
 				continueGame = false;
 			}
 			else {
-				bonusQuestion();
+				if (tuCorrect) {
+					bonusQuestion();
+				}
 			}
 		}
 		endGameSequence();
@@ -105,10 +118,15 @@ public class OnePlayerGame {
 		DatabaseUnpacking unpack = new DatabaseUnpacking();
 		
 		//if a category(s) was chosen, randomly pick a category to give 
-		if (categories.size()!=0) {
-			int index = rand.nextInt(categories.size());
-			currentCategory = categories.get(index);
+		if (categories.size()==0) {
+			continueGame = false;
+			return;
 		}
+		int index = rand.nextInt(categories.size());
+		System.out.println(index);
+		currentCategory = categories.get(index);
+		System.out.println(currentCategory);
+		
 		//return a question of the randomly chosen category
 		//set currentQuestion equal to this JSON file so bonusQuestion() will give corresponding bonus
 		currentQuestion = unpack.getQuestionOfCategory(currentCategory);
@@ -118,13 +136,11 @@ public class OnePlayerGame {
 		String question;
 		try {
 			question = (String) currentQuestion.get("tossup_question");
-			channel.sendMessage("Tossup Question:\n" + question).queue();
+			channel.sendMessage(currentCategory + " Tossup:\n" + question).queue();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		channel.sendMessage("now i am waiting for a response").queue();
 		
 		event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 		while (!playerResponded) {
@@ -134,21 +150,19 @@ public class OnePlayerGame {
 		playerResponded = false;
 		//once player responds, userAnswer is set to first answer in the GameStateMachine class
 		
-		channel.sendMessage("wow you responded yay").queue();
-		
 		if (userAnswer.equalsIgnoreCase(correctTUAnswer)) {
 			//if tossup was correct, update stats to reflect this
+			tuCorrect = true;
 			updateStats(true, currentCategory);
 			channel.sendMessage("Correct!").queue();
 			channel.sendMessage("The correct answer was:\n" + correctTUAnswer).queue();
 		}
 		else if (tossupFormat.equals("Multiple Choice")){
 			String userStart = userAnswer.substring(0,1).toUpperCase();
-			System.out.println(userStart);
 			String realStart = correctTUAnswer.substring(0,1);
-			System.out.println(realStart);
 			//if it's multiple choice, we only have to compare the first letter
 			if (userStart.equalsIgnoreCase(realStart)) {
+				tuCorrect = true;
 				channel.sendMessage("Correct!").queue();
 				channel.sendMessage("The correct answer was:\n" + correctTUAnswer).queue();
 				updateStats(true, currentCategory);
@@ -162,6 +176,7 @@ public class OnePlayerGame {
 				}
 				playerResponded = false;
 				if (userAnswer.equalsIgnoreCase("y")) {
+					tuCorrect = true;
 					updateStats(true, currentCategory);
 					channel.sendMessage("okay stats updated").queue();
 				}
@@ -176,6 +191,7 @@ public class OnePlayerGame {
 			}
 			playerResponded = false;
 			if (userAnswer.equalsIgnoreCase("y")) {
+				tuCorrect = true;
 				updateStats(true, currentCategory);
 				channel.sendMessage("okay stats updated").queue();
 			}
@@ -186,6 +202,8 @@ public class OnePlayerGame {
 	}
 	
 	public void bonusQuestion() throws InterruptedException {
+		tuCorrect = false;
+		
 		String bonusFormat = (String) currentQuestion.get("bonus_format");
 		String correctBAnswer = (String) currentQuestion.get("bonus_answer");
 		String currentCategory = (String) currentQuestion.get("category");
@@ -193,7 +211,7 @@ public class OnePlayerGame {
 		String question;
 		try {
 			question = (String) currentQuestion.get("bonus_question");
-			channel.sendMessage("Bonus Question:\n" + question).queue();
+			channel.sendMessage(currentCategory + " Bonus Question:\n" + question).queue();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
