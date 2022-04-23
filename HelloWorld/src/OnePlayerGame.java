@@ -128,8 +128,7 @@ public class OnePlayerGame {
 		
 		event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 		while (!playerResponded) {
-			TimeUnit.SECONDS.sleep((long) 0.1);
-			System.out.println(playerResponded);
+			TimeUnit.MILLISECONDS.sleep(10);
 			//stuck in this loop until player responds. 
 		}
 		playerResponded = false;
@@ -145,19 +144,34 @@ public class OnePlayerGame {
 		}
 		else if (tossupFormat.equals("Multiple Choice")){
 			String userStart = userAnswer.substring(0,1).toUpperCase();
+			System.out.println(userStart);
 			String realStart = correctTUAnswer.substring(0,1);
+			System.out.println(realStart);
 			//if it's multiple choice, we only have to compare the first letter
 			if (userStart.equalsIgnoreCase(realStart)) {
 				channel.sendMessage("Correct!").queue();
 				channel.sendMessage("The correct answer was:\n" + correctTUAnswer).queue();
 				updateStats(true, currentCategory);
+			} else {
+				channel.sendMessage("The correct answer was:\n" + correctTUAnswer).queue();
+				channel.sendMessage("Were you correct? y/n").queue();
+				event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
+				while (!playerResponded) {
+					TimeUnit.MILLISECONDS.sleep(10);
+					//stuck in this loop until player responds. 
+				}
+				playerResponded = false;
+				if (userAnswer.equalsIgnoreCase("y")) {
+					updateStats(true, currentCategory);
+					channel.sendMessage("okay stats updated").queue();
+				}
 			}
 		} else {
 			channel.sendMessage("The correct answer was:\n" + correctTUAnswer).queue();
 			channel.sendMessage("Were you correct? y/n").queue();
 			event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 			while (!playerResponded) {
-				TimeUnit.SECONDS.sleep((long) 0.1);
+				TimeUnit.MILLISECONDS.sleep(10);
 				//stuck in this loop until player responds. 
 			}
 			playerResponded = false;
@@ -186,7 +200,7 @@ public class OnePlayerGame {
 		}
 		event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 		while (!playerResponded) {
-			TimeUnit.SECONDS.sleep((long) 0.1);
+			TimeUnit.MILLISECONDS.sleep(10);
 			//stuck in this loop until player responds. 
 		}
 		playerResponded = false;
@@ -204,13 +218,25 @@ public class OnePlayerGame {
 				channel.sendMessage("Correct!").queue();
 				channel.sendMessage("The correct answer was:\n" + correctBAnswer).queue();
 				updateStats(false, currentCategory);
+			} else {
+				channel.sendMessage("The correct answer was:\n" + correctBAnswer).queue();
+				channel.sendMessage("Were you correct? y/n").queue();
+				event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
+				while (!playerResponded) {
+					TimeUnit.MILLISECONDS.sleep(10);
+					//stuck in this loop until player responds. 
+				}
+				playerResponded = false;
+				if (userAnswer.equalsIgnoreCase("y")) {
+					updateStats(false, currentCategory);
+				}
 			}
 		} else {
 			channel.sendMessage("The correct answer was:\n" + correctBAnswer).queue();
 			channel.sendMessage("Were you correct? y/n").queue();
 			event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 			while (!playerResponded) {
-				TimeUnit.SECONDS.sleep((long) 0.1);
+				TimeUnit.MILLISECONDS.sleep(10);
 				//stuck in this loop until player responds. 
 			}
 			playerResponded = false;
