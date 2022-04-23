@@ -23,10 +23,12 @@ public class MessageListener extends ListenerAdapter{
 	{
 		String[] args = event.getMessage().getContentRaw().split(" ");
 		//System.out.println(args[0]);
+		/*
 		if (event.getMessage().getContentRaw().startsWith("Hi Apples!")) {
 		    event.getChannel().sendMessage("Hi! Tell me your name, or say \"Stop\"!").queue();
 		    event.getJDA().addEventListener(new GameStateMachine(event.getChannel(), event.getAuthor()));
 		}
+		*/
 		if (args[0].equalsIgnoreCase(prefix + "question")) 
 		{
 			String question;
@@ -47,6 +49,7 @@ public class MessageListener extends ListenerAdapter{
 			
 		}
 		else if (args[0].equalsIgnoreCase(prefix + "game")) {
+			//TODO look at the thread name what we should do about that
 			Thread newThread = new Thread(() -> {
 				ArrayList<String> al =
 			            new ArrayList<String>(Arrays.asList(args));
@@ -59,9 +62,6 @@ public class MessageListener extends ListenerAdapter{
 				}
 			});
 			newThread.start();
-			
-		}
-		else if (args[0].equalsIgnoreCase(prefix + "end")) {
 			
 		}
 	}

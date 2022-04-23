@@ -5,10 +5,12 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class GameStateMachine extends ListenerAdapter {
 	 private final long channelId, authorId; // id because keeping the entity would risk cache to become outdated
+	 OnePlayerGame game;
 
-	    public GameStateMachine(MessageChannel channel, User author) {
+	    public GameStateMachine(MessageChannel channel, User author, OnePlayerGame game) {
 	        this.channelId = channel.getIdLong();
 	        this.authorId = author.getIdLong();
+	        this.game = game;
 	    }
 
 	    @Override
@@ -17,17 +19,16 @@ public class GameStateMachine extends ListenerAdapter {
 	        if (event.getChannel().getIdLong() != channelId) return; // ignore other channels
 	        MessageChannel channel = event.getChannel();
 	        String content = event.getMessage().getContentRaw();
-	        // since only one state is present you don't need a switch but that would be the concept if you had more than 1 interaction point in this protocol
-	        if (content.equals("Stop")) {
-	            channel.sendMessage("Understood!").queue();
+	        
+	        if (event.getAuthor().getIdLong() == authorId) {
+		        game.userAnswer = content;
 	            event.getJDA().removeEventListener(this); // stop listening
-	        }
-	        else if (event.getAuthor().getIdLong() == authorId) {
-	            channel.sendMessage("Hi " + content + "!").queue();
-	            event.getJDA().removeEventListener(this); // stop listening
+	            //since the listener is removed immediately after triggered
+	            //no need to worry about it taking later messages instead of the first one sent after triggered
+	            game.playerResponded = true;
 	        }
 	        else {
-	            channel.sendMessage("Wait your turn " + event.getMember().getEffectiveName() + "!").queue();
+	            channel.sendMessage("This is not your game " + event.getMember().getEffectiveName() + "! Please use a different channel.").queue();
 	        }
 	    }
 }
