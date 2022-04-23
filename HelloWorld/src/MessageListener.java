@@ -51,8 +51,20 @@ public class MessageListener extends ListenerAdapter{
 		else if (args[0].equalsIgnoreCase(prefix + "game")) {
 			//TODO look at the thread name what we should do about that
 			Thread newThread = new Thread(() -> {
-				ArrayList<String> al =
-			            new ArrayList<String>(Arrays.asList(args));
+				ArrayList<String> al;
+				if (args.length>1) {
+					//if category arguments were given
+					al = new ArrayList<String>(Arrays.asList(args));
+				} else {
+					//if no category arguments were given, set all of them
+					String[] allCategories = new String[]{"PHYSICS", "ENERGY", "EARTH AND SPACE", "EARTH SCIENCE", 
+					        "ASTRONOMY", "CHEMISTRY", "BIOLOGY", "MATH"};
+					al = new ArrayList<String>();
+					for (int i = 0; i<allCategories.length; i++) {
+						al.add(allCategories[i]);
+					}
+				}
+				
 			    OnePlayerGame thisGame = new OnePlayerGame(event, al);
 			    try {
 					thisGame.gameControl();
@@ -62,6 +74,9 @@ public class MessageListener extends ListenerAdapter{
 				}
 			});
 			newThread.start();
+			
+		}
+		else if (args[0].equalsIgnoreCase(prefix + "help")) {
 			
 		}
 	}

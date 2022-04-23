@@ -43,16 +43,8 @@ public class HelloWorld {
 	    builder.setCompression(Compression.NONE);
 	    // Set activity (like "playing Something")
 	    builder.setActivity(Activity.playing("Science Bowl!"));
-	    TesterListener listener1 = new TesterListener();
-	    builder.addEventListeners(listener1);
-	    builder.build();
-	    builder.removeEventListeners(listener1);
 	    builder.addEventListeners(new MessageListener());
 	    builder.build();
-	    String request = String.format("""
-				{"sources": ["Official", "CSUB"], "categories": ["%s"]}
-				""", "PHYSICS");
-	    System.out.println(request);
 	}
 
 	//Method that returns a JSONObject with all of the information for a single question

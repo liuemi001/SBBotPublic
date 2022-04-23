@@ -99,6 +99,7 @@ public class OnePlayerGame {
 	}
 	
 	public void tossupQuestion() throws Exception {
+		
 		String currentCategory = "";
 		DatabaseUnpacking unpack = new DatabaseUnpacking();
 		
@@ -121,11 +122,16 @@ public class OnePlayerGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		channel.sendMessage("now i am waiting for a response").queue();
+		
 		event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 		while (!playerResponded) {
 			//stuck in this loop until player responds. 
 		}
 		//once player responds, userAnswer is set to first answer in the GameStateMachine class
+		
+		channel.sendMessage("wow you responded yay").queue();
 		
 		if (userAnswer.equalsIgnoreCase(correctTUAnswer)) {
 			//if tossup was correct, update stats to reflect this

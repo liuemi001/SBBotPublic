@@ -35,7 +35,7 @@ public class DatabaseUnpacking {
 
 		public JSONObject sendPost() throws Exception {
 			HttpRequest.BodyPublisher data=HttpRequest.BodyPublishers.ofString("""
-	        {"sources": ["Official", "CSUB"], "categories": ["PHYSICS"]}
+	        {"sources": ["Official", "CSUB", "98Nats", "05Nats"], "categories": ["PHYSICS"]}
 	        """);
 			HttpRequest request = HttpRequest.newBuilder()
 					.POST(data)
@@ -56,6 +56,8 @@ public class DatabaseUnpacking {
 			String input = String.format("""
 				{"sources": ["Official", "CSUB", "98Nats", "05Nats"], "categories": ["%s"]}
 				""", category);
+			
+			System.out.println(input);
 			
 			HttpRequest.BodyPublisher data=HttpRequest.BodyPublishers.ofString(input);
 			HttpRequest request = HttpRequest.newBuilder()
