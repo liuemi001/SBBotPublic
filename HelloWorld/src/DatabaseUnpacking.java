@@ -52,15 +52,12 @@ public class DatabaseUnpacking {
 		}
 		
 		public JSONObject getQuestionOfCategory(String category) throws Exception {
-			String request = """
-					{"sources": ["Official", "CSUB"], "categories": ["PHYSICS"]}
-					""";
-			String request = String.format("""
-					{"sources": ["Official", "CSUB"], "categories": ["%s"]}
-					""", category);
-			HttpRequest.BodyPublisher data=HttpRequest.BodyPublishers.ofString("""
-			{"sources": ["Official", "CSUB"], "categories": ["PHYSICS"]}
-			""");
+			//make the the category variable passed in exactly matches our categories
+			String input = String.format("""
+				{"sources": ["Official", "CSUB", "98Nats", "05Nats"], "categories": ["%s"]}
+				""", category);
+			
+			HttpRequest.BodyPublisher data=HttpRequest.BodyPublishers.ofString(input);
 			HttpRequest request = HttpRequest.newBuilder()
 					.POST(data)
 					.uri(URI.create("https://scibowldb.com/api/questions/random"))

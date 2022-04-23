@@ -1,11 +1,6 @@
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import javax.security.auth.login.LoginException;
-
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -52,6 +47,18 @@ public class MessageListener extends ListenerAdapter{
 			
 		}
 		else if (args[0].equalsIgnoreCase(prefix + "game")) {
+			Thread newThread = new Thread(() -> {
+				ArrayList<String> al =
+			            new ArrayList<String>(Arrays.asList(args));
+			    OnePlayerGame thisGame = new OnePlayerGame(event, al);
+			    try {
+					thisGame.gameControl();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			newThread.start();
 			
 		}
 		else if (args[0].equalsIgnoreCase(prefix + "end")) {
