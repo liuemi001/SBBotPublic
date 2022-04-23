@@ -7,10 +7,12 @@ public class GameListener extends ListenerAdapter{
 	 private final long channelId, authorId; 
 	 // id because keeping the entity would risk cache to become outdated, according
 	 public String MostRecentMessage = "";
+	 OnePlayerGame game;
 	 
-	 public GameListener(MessageChannel channel, User author) {
+	 public GameListener(MessageChannel channel, User author, OnePlayerGame game) {
 		 this.channelId = channel.getIdLong();
 	     this.authorId = author.getIdLong();
+	     this.game = game;
 	 }
 	 
 	 @Override
@@ -21,6 +23,11 @@ public class GameListener extends ListenerAdapter{
 	     String content = event.getMessage().getContentRaw();
 		 
 		 if (event.getAuthor().getIdLong() == authorId) {
+			 
+			 if (content.equalsIgnoreCase("!end")) {
+				 game.continueGame = false;
+				 channel.sendMessage("Okay! Game will be ended after this question.").queue();
+			 }
 			 if (!content.startsWith("_")) {
 				 MostRecentMessage = content;
 			 }

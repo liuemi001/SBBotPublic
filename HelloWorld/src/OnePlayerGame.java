@@ -37,7 +37,8 @@ public class OnePlayerGame {
 		this.event = event;
 		this.channel = event.getChannel();
 		this.author = event.getAuthor();
-		this.listener = new GameListener(event.getChannel(), event.getAuthor());
+		this.listener = new GameListener(event.getChannel(), event.getAuthor(), this);
+		event.getJDA().addEventListener(this.listener);
 		ArrayList<String> rawcats = new ArrayList<String>();
 		rawcats.addAll(categories);
 		
@@ -94,6 +95,7 @@ public class OnePlayerGame {
 	public void gameControl() throws Exception {
 		//checks in between tossup and bonus questions to see if user wants to end game
 		while (continueGame) {
+			
 			if (listener.MostRecentMessage.equals("!end")) {
 				continueGame = false;
 			}
@@ -123,9 +125,7 @@ public class OnePlayerGame {
 			return;
 		}
 		int index = rand.nextInt(categories.size());
-		System.out.println(index);
 		currentCategory = categories.get(index);
-		System.out.println(currentCategory);
 		
 		//return a question of the randomly chosen category
 		//set currentQuestion equal to this JSON file so bonusQuestion() will give corresponding bonus
@@ -315,26 +315,27 @@ public class OnePlayerGame {
 	public void endGameSequence() {
 		//send subject specific and total stats
 		//TODO: add number questions heard per subject? 
-		channel.sendMessage("Thanks for playing! Here are your stats:").queue();
-		channel.sendMessage("Physics: " + Integer.toString(stats.get(0))).queue();
-		channel.sendMessage("Energy: " + Integer.toString(stats.get(1))).queue();
-		channel.sendMessage("Earth and Space: " + Integer.toString(stats.get(2))).queue();
-		channel.sendMessage("Earth Science: " + Integer.toString(stats.get(3))).queue();
-		channel.sendMessage("Astronomy: " + Integer.toString(stats.get(4))).queue();
-		channel.sendMessage("Chemistry: " + Integer.toString(stats.get(5))).queue();
-		channel.sendMessage("Biology: " + Integer.toString(stats.get(6))).queue();
-		channel.sendMessage("Math: " + Integer.toString(stats.get(7))).queue();
-		channel.sendMessage("Total Tossups heard:" + Integer.toString(tusPlayed)).queue();
-		channel.sendMessage("Total Bonuses heard:" + Integer.toString(bsPlayed)).queue();
+		
 		int pointsPossible = 4*tusPlayed + 10*bsPlayed;
 		int pointsEarned = 0;
 		for (int i =0; i<8; i++) {
 			pointsEarned = pointsEarned + stats.get(i);
 		}
-		channel.sendMessage("Total Points earned:" + Integer.toString(pointsEarned)).queue();
-		channel.sendMessage("Total Points possible:" + Integer.toString(pointsPossible)).queue();
-		channel.sendMessage("That's it! Have a great day :)").queue();
-		
+		channel.sendMessage("Thanks for playing! Here are your stats:\n"
+				+ "\nPhysics: " + Integer.toString(stats.get(0))
+				+ "\nEnergy: " + Integer.toString(stats.get(1))
+				+ "\nEarth and Space: " + Integer.toString(stats.get(2))
+				+ "\nEarth Science: " + Integer.toString(stats.get(3))
+				+ "\nAstronomy: " + Integer.toString(stats.get(4))
+				+ "\nChemistry: " + Integer.toString(stats.get(5))
+				+ "\nBiology: " + Integer.toString(stats.get(6))
+				+ "\nMath: " + Integer.toString(stats.get(7))
+				+ "\nTotal Tossups heard: " + Integer.toString(tusPlayed)
+				+ "\nTotal Bonuses heard: " + Integer.toString(bsPlayed)
+				+ "\nTotal Points earned: " + Integer.toString(pointsEarned)
+				+ "\nTotal Points possible: " + Integer.toString(pointsPossible)
+				).queue();
+	
 	}
 	
 	

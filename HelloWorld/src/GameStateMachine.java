@@ -21,12 +21,13 @@ public class GameStateMachine extends ListenerAdapter {
 	        String content = event.getMessage().getContentRaw();
 	        
 	        if (event.getAuthor().getIdLong() == authorId) {
-		        game.userAnswer = content;
-		        game.playerResponded = true;
-	            event.getJDA().removeEventListener(this); // stop listening
-	            //since the listener is removed immediately after triggered
-	            //no need to worry about it taking later messages instead of the first one sent after triggered
-	            
+	        	if (!content.startsWith("_") && !content.startsWith("!end")) {
+	        		game.userAnswer = content;
+			        game.playerResponded = true;
+		            event.getJDA().removeEventListener(this); // stop listening
+		            //since the listener is removed immediately after triggered
+		            //no need to worry about it taking later messages instead of the first one sent after triggered
+	        	}
 	        }
 	        else {
 	            channel.sendMessage("This is not your game " + event.getMember().getEffectiveName() + "! Please use a different channel.").queue();
