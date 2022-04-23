@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONObject;
 
@@ -127,8 +128,11 @@ public class OnePlayerGame {
 		
 		event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 		while (!playerResponded) {
+			TimeUnit.SECONDS.sleep((long) 0.1);
+			System.out.println(playerResponded);
 			//stuck in this loop until player responds. 
 		}
+		playerResponded = false;
 		//once player responds, userAnswer is set to first answer in the GameStateMachine class
 		
 		channel.sendMessage("wow you responded yay").queue();
@@ -153,18 +157,21 @@ public class OnePlayerGame {
 			channel.sendMessage("Were you correct? y/n").queue();
 			event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 			while (!playerResponded) {
+				TimeUnit.SECONDS.sleep((long) 0.1);
 				//stuck in this loop until player responds. 
 			}
+			playerResponded = false;
 			if (userAnswer.equalsIgnoreCase("y")) {
 				updateStats(true, currentCategory);
+				channel.sendMessage("okay stats updated").queue();
 			}
 		}
-		
+		channel.sendMessage("End of tossup cycle!").queue();
 		tusPlayed ++;
 		
 	}
 	
-	public void bonusQuestion() {
+	public void bonusQuestion() throws InterruptedException {
 		String bonusFormat = (String) currentQuestion.get("bonus_format");
 		String correctBAnswer = (String) currentQuestion.get("bonus_answer");
 		String currentCategory = (String) currentQuestion.get("category");
@@ -179,9 +186,10 @@ public class OnePlayerGame {
 		}
 		event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 		while (!playerResponded) {
+			TimeUnit.SECONDS.sleep((long) 0.1);
 			//stuck in this loop until player responds. 
 		}
-		
+		playerResponded = false;
 		if (userAnswer.equalsIgnoreCase(correctBAnswer)) {
 			//if tossup was correct, update stats to reflect this
 			updateStats(false, currentCategory);
@@ -202,8 +210,10 @@ public class OnePlayerGame {
 			channel.sendMessage("Were you correct? y/n").queue();
 			event.getJDA().addEventListener(new GameStateMachine(channel, author, this));
 			while (!playerResponded) {
+				TimeUnit.SECONDS.sleep((long) 0.1);
 				//stuck in this loop until player responds. 
 			}
+			playerResponded = false;
 			if (userAnswer.equalsIgnoreCase("y")) {
 				updateStats(false, currentCategory);
 			}

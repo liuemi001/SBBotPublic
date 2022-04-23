@@ -23,7 +23,9 @@ public class GameStateMachine extends ListenerAdapter {
 	        if (event.getAuthor().getIdLong() == authorId) {
 		        game.userAnswer = content;
 		        System.out.println("user answer was:" + game.userAnswer);
+		        System.out.println("In game state machine, playerresponded is");
 		        game.playerResponded = true;
+		        System.out.println(game.playerResponded);
 	            event.getJDA().removeEventListener(this); // stop listening
 	            //since the listener is removed immediately after triggered
 	            //no need to worry about it taking later messages instead of the first one sent after triggered
