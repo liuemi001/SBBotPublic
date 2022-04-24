@@ -178,7 +178,6 @@ public class OnePlayerGame {
 				if (userAnswer.equalsIgnoreCase("y")) {
 					tuCorrect = true;
 					updateStats(true, currentCategory);
-					channel.sendMessage("okay stats updated").queue();
 				}
 			}
 		} else {
@@ -193,10 +192,8 @@ public class OnePlayerGame {
 			if (userAnswer.equalsIgnoreCase("y")) {
 				tuCorrect = true;
 				updateStats(true, currentCategory);
-				channel.sendMessage("okay stats updated").queue();
 			}
 		}
-		channel.sendMessage("End of tossup cycle!").queue();
 		tusPlayed ++;
 		
 	}
@@ -316,7 +313,7 @@ public class OnePlayerGame {
 		//send subject specific and total stats
 		//TODO: add number questions heard per subject? 
 		
-		int pointsPossible = 4*tusPlayed + 10*bsPlayed;
+		int pointsPossible = 14*tusPlayed;
 		int pointsEarned = 0;
 		for (int i =0; i<8; i++) {
 			pointsEarned = pointsEarned + stats.get(i);
