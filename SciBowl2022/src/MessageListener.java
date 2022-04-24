@@ -1,12 +1,15 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class MessageListener extends ListenerAdapter{
 	public String prefix = "!";
 	DatabaseUnpacking bird = new DatabaseUnpacking();
+	ArrayList<User> players =new ArrayList<User>(); 
+	
 
 	//public static void main(String[] args) throws LoginException{
 		// TODO Auto-generated method stub
@@ -48,8 +51,9 @@ public class MessageListener extends ListenerAdapter{
 		
 			
 		}
-		else if (args[0].equalsIgnoreCase(prefix + "game")) {
+		else if (args[0].equalsIgnoreCase(prefix + "game") && players.indexOf(event.getAuthor())==-1) {
 			//TODO look at the thread name what we should do about that
+			players.add(event.getAuthor());
 			Thread newThread = new Thread(() -> {
 				ArrayList<String> al = new ArrayList<String>();
 				if (args.length>1) {
@@ -67,8 +71,11 @@ public class MessageListener extends ListenerAdapter{
 			newThread.start();
 			
 		}
-		else if (args[0].equalsIgnoreCase(prefix + "help")) {
-			
+		else if (args[0].equalsIgnoreCase(prefix + "end")) {
+			players.remove(event.getAuthor());
+		}
+		else if (args[0].equalsIgnoreCase(prefix + "game") && players.indexOf(event.getAuthor())!=-1) {
+			event.getMessage().reply("You are currently playing another game. Please end that game before starting a new one.").queue();
 		}
 	}
 
