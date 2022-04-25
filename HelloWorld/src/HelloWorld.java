@@ -27,7 +27,6 @@ public class HelloWorld {
 	public static void main(String[] args) throws Exception{
 
 		// TODO Auto-generated method stub
-		//JDA jda = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68").build();
 		JDABuilder builder = JDABuilder.createDefault("INSERT TOKEN HERE");
 		HelloWorld obj = new HelloWorld();
 		JSONObject QuestionFile=obj.sendGet();
