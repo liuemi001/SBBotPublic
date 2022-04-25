@@ -5,7 +5,6 @@ To use, navigate to HelloWorld.java within the SciBowl2022 folder. Look for "INS
 To get started, use the !game command to create a new game. Only you will be able to answer questions in that game.
 If you want to focus on certain categories, put the subject abbreviation associated with a specific category after the !game command.
 The subject abbreviations are:  
-
 Physics: phys  
 Energy: nrg  
 Earth and Space: es  
