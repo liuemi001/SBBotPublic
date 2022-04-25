@@ -27,9 +27,7 @@ public class HelloWorld {
 	public static void main(String[] args) throws Exception{
 		// Comment added
 		// TODO Auto-generated method stub
-		//JDA jda = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68").build();
-		JDABuilder builder = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
-		JDABuilder builder2 = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
+		JDABuilder builder = JDABuilder.createDefault("INSERT TOKEN HERE");
 		
 		HelloWorld obj = new HelloWorld();
 		JSONObject QuestionFile=obj.sendGet();
