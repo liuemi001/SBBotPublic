@@ -30,8 +30,8 @@ public class HelloWorld {
 	public static void main(String[] args) throws LoginException{
 >>>>>>> c396340cad6f7ded389660e6dbe4a201bbd358c7
 		// TODO Auto-generated method stub
-		//JDA jda = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68").build();
-		JDABuilder builder = JDABuilder.createDefault("OTU0ODE0MzAzNTcwMTAwMjg0.YjYmHQ.BzkEwALqpo9cvD9YbfjFhR5RA68");
+		//JDA jda = JDABuilder.createDefault("redacted").build();
+		JDABuilder builder = JDABuilder.createDefault("redacted");
 
 		HelloWorld obj = new HelloWorld();
 		JSONObject QuestionFile=obj.sendGet();
